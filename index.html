@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sapori d'Italia – Catalogo prodotti</title>
+<meta name="description" content="Catalogo dei prodotti italiani premium: pasta, oli, salse e dolci, con la regione di origine.">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==== BRAND TOKENS: client er exact colour hex ekhane boshan ==== */
+:root{
+  --brand-primary:#8c2f1b;
+  --brand-secondary:#2f4a2b;
+  --brand-accent:#c99a3b;
+  --brand-bg:#fbf8f3;
+  --brand-ink:#231f1c;
+  --bs-body-font-family:'Inter',system-ui,sans-serif;
+  --bs-body-color:var(--brand-ink);
+  --bs-body-bg:var(--brand-bg);
+  --bs-link-color:var(--brand-primary);
+}
+h1,h2,h3,h4,h5,.navbar-brand{font-family:'Fraunces',Georgia,serif;font-weight:700}
+section{scroll-margin-top:70px}
+.btn-primary{--bs-btn-bg:var(--brand-primary);--bs-btn-border-color:var(--brand-primary);--bs-btn-hover-bg:#6f2414;--bs-btn-hover-border-color:#6f2414}
+.btn-outline-primary{--bs-btn-color:var(--brand-primary);--bs-btn-border-color:var(--brand-primary);--bs-btn-hover-bg:var(--brand-primary);--bs-btn-hover-border-color:var(--brand-primary)}
+.navbar{background:rgba(251,248,243,.96);border-bottom:1px solid #e8e0d2}
+.logo-ph{display:inline-block;width:38px;height:38px;border-radius:50%;background:var(--brand-primary);vertical-align:middle;margin-right:.5rem}
+.img-box{background:linear-gradient(135deg,#e9c46a,#a3b18a);overflow:hidden}
+.img-box img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.section-title{font-size:clamp(1.6rem,3.5vw,2.3rem)}
+.section-lead{max-width:56ch;color:#5d5650}
+
+/* 1 Hero */
+.hero{position:relative;color:#fff;min-height:78vh;display:flex;align-items:center;background:var(--brand-secondary)}
+.hero .bg{position:absolute;inset:0}
+.hero .bg img{width:100%;height:100%;object-fit:cover}
+.hero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(25,40,22,.88),rgba(25,40,22,.35))}
+.hero .container{position:relative;z-index:1}
+.hero h1{font-size:clamp(2.2rem,5.5vw,3.8rem);max-width:15ch}
+
+/* 2 Categories */
+.cat-tile{position:relative;display:block;border-radius:.75rem;overflow:hidden;aspect-ratio:1/1;color:#fff;text-decoration:none}
+.cat-tile .img-box{position:absolute;inset:0}
+.cat-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.65),transparent 60%)}
+.cat-tile:hover img{transform:scale(1.06)}
+.cat-tile span{position:absolute;left:1rem;bottom:.9rem;z-index:1;font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem}
+
+/* 3 Catalog */
+.filter-bar .nav-link{color:var(--brand-ink);border-radius:999px;padding:.4rem 1rem;white-space:nowrap}
+.filter-bar .nav-link.active{background:var(--brand-primary);color:#fff}
+.cat-scroll{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+.card-product{border:0;background:#fff;border-radius:.75rem;overflow:hidden;box-shadow:0 1px 3px rgba(35,31,28,.08);height:100%}
+.card-product .img-box{aspect-ratio:4/3}
+.card-product:hover img{transform:scale(1.04)}
+.region{color:var(--brand-secondary);font-size:.85rem;font-weight:500}
+
+/* 4 Regions */
+.region-card{position:relative;border-radius:.75rem;overflow:hidden;min-height:260px;color:#fff;display:flex;align-items:flex-end}
+.region-card .img-box{position:absolute;inset:0}
+.region-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,15,10,.75),transparent 65%)}
+.region-card div.txt{position:relative;z-index:1;padding:1.2rem}
+
+/* 5 About */
+.about-img{border-radius:.75rem;aspect-ratio:4/5}
+
+/* 6 Quality */
+.quality{background:var(--brand-secondary);color:#fff}
+.q-icon{width:56px;height:56px;border-radius:50%;background:var(--brand-accent);color:var(--brand-ink);display:grid;place-items:center;font-size:1.5rem}
+
+/* 7 Product detail */
+.product-detail{background:#fff}
+.carousel-item .img-box{aspect-ratio:4/3}
+.gallery-thumbs button{border:2px solid transparent;padding:0;border-radius:.5rem;overflow:hidden;width:76px;height:58px}
+.gallery-thumbs button.active{border-color:var(--brand-primary)}
+.gallery-thumbs .img-box{width:100%;height:100%}
+
+/* 8 Contact */
+.contact{background:var(--brand-bg)}
+footer{background:var(--brand-ink);color:#d9d3c9}
+footer a{color:#fff;text-decoration:none}
+:focus-visible{outline:3px solid var(--brand-accent);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#home"><span class="logo-ph" aria-hidden="true"></span>Sapori d'Italia</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Menu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="#categorie">Categorie</a></li>
+        <li class="nav-item"><a class="nav-link" href="#catalogo">Catalogo</a></li>
+        <li class="nav-item"><a class="nav-link" href="#regioni">Regioni</a></li>
+        <li class="nav-item"><a class="nav-link" href="#storia">Chi siamo</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contatti">Contatti</a></li>
+        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+          <div class="btn-group btn-group-sm" role="group" aria-label="Lingua">
+            <a href="#" class="btn btn-primary" hreflang="it">IT</a>
+            <a href="#" class="btn btn-outline-primary" hreflang="en">EN</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ 1. HERO ============ -->
+<header class="hero" id="home">
+  <div class="bg"><img src="https://images.unsplash.com/photo-1612548041350-853c0cd6e299?auto=format&fit=crop&w=1600&h=900&q=70" alt="Tavola con prodotti italiani"></div>
+  <div class="container py-5">
+    <h1>Il meglio della tavola italiana, regione per regione.</h1>
+    <p class="fs-5 mt-3 mb-4" style="max-width:50ch">Pasta, oli, salse e dolci scelti da piccoli produttori. Sfoglia il catalogo e scopri l'origine di ogni prodotto.</p>
+    <a href="#catalogo" class="btn btn-light btn-lg me-2">Sfoglia il catalogo</a>
+    <a href="#contatti" class="btn btn-outline-light btn-lg">Contattaci</a>
+  </div>
+</header>
+
+<!-- ============ 2. CATEGORIE ============ -->
+<section class="py-5" id="categorie">
+  <div class="container py-3">
+    <h2 class="section-title mb-2">Scegli per categoria</h2>
+    <p class="section-lead mb-4">Quattro famiglie di prodotti, tutte con produttore e regione indicati.</p>
+    <div class="row g-3 g-lg-4">
+      <div class="col-6 col-lg-3"><a href="#catalogo" class="cat-tile" data-go="pasta"><div class="img-box h-100"><img loading="lazy" src="https://images.unsplash.com/photo-1568689595552-ae5eb971f704?auto=format&fit=crop&w=600&h=600&q=70" alt="Pasta"></div><span>Pasta</span></a></div>
+      <div class="col-6 col-lg-3"><a href="#catalogo" class="cat-tile" data-go="oli"><div class="img-box h-100"><img loading="lazy" src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&h=600&q=70" alt="Oli"></div><span>Oli</span></a></div>
+      <div class="col-6 col-lg-3"><a href="#catalogo" class="cat-tile" data-go="salse"><div class="img-box h-100"><img loading="lazy" src="https://images.unsplash.com/photo-1673442635965-34f1b36d8944?auto=format&fit=crop&w=600&h=600&q=70" alt="Salse"></div><span>Salse</span></a></div>
+      <div class="col-6 col-lg-3"><a href="#catalogo" class="cat-tile" data-go="dolci"><div class="img-box h-100"><img loading="lazy" src="https://images.unsplash.com/photo-1654870032519-9db00597cd78?auto=format&fit=crop&w=600&h=600&q=70" alt="Dolci"></div><span>Dolci</span></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. CATALOGO (filter + grid) ============ -->
+<section class="py-5" id="catalogo" style="background:#f3ede2">
+  <div class="container py-3">
+    <h2 class="section-title mb-4">Il catalogo</h2>
+    <div class="filter-bar row g-3 align-items-center mb-4">
+      <div class="col-lg-7">
+        <ul class="nav cat-scroll" id="catNav">
+          <li class="nav-item"><a class="nav-link active" href="#" data-cat="all">Tutti</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" data-cat="pasta">Pasta</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" data-cat="oli">Oli</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" data-cat="salse">Salse</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" data-cat="dolci">Dolci</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-5">
+        <div class="row g-2">
+          <div class="col-6">
+            <select class="form-select" id="regionFilter" aria-label="Filtra per regione">
+              <option value="all">Tutte le regioni</option><option>Puglia</option><option>Toscana</option><option>Sicilia</option><option>Campania</option>
+            </select>
+          </div>
+          <div class="col-6"><input type="search" class="form-control" id="searchBox" placeholder="Cerca…" aria-label="Cerca prodotto"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4" id="productGrid">
+      <div class="col-6 col-md-4 col-lg-3" data-cat="pasta" data-region="Puglia"><a href="#prodotto" class="card card-product text-decoration-none text-reset"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1568689595552-ae5eb971f704?auto=format&fit=crop&w=600&h=450&q=70" alt="Orecchiette"></div><div class="card-body"><div class="region">Puglia</div><h3 class="h5 mt-1 mb-1">Orecchiette artigianali</h3><p class="small text-secondary mb-0">Trafilate al bronzo, 500 g.</p></div></a></div>
+      <div class="col-6 col-md-4 col-lg-3" data-cat="oli" data-region="Toscana"><a href="#prodotto" class="card card-product text-decoration-none text-reset"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&h=450&q=70" alt="Olio extravergine"></div><div class="card-body"><div class="region">Toscana</div><h3 class="h5 mt-1 mb-1">Olio extravergine</h3><p class="small text-secondary mb-0">Spremitura a freddo, 750 ml.</p></div></a></div>
+      <div class="col-6 col-md-4 col-lg-3" data-cat="salse" data-region="Campania"><a href="#prodotto" class="card card-product text-decoration-none text-reset"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1673442635965-34f1b36d8944?auto=format&fit=crop&w=600&h=450&q=70" alt="Passata"></div><div class="card-body"><div class="region">Campania</div><h3 class="h5 mt-1 mb-1">Passata San Marzano</h3><p class="small text-secondary mb-0">Pomodori DOP, 680 g.</p></div></a></div>
+      <div class="col-6 col-md-4 col-lg-3" data-cat="dolci" data-region="Sicilia"><a href="#prodotto" class="card card-product text-decoration-none text-reset"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1654870032519-9db00597cd78?auto=format&fit=crop&w=600&h=450&q=70" alt="Cannoli"></div><div class="card-body"><div class="region">Sicilia</div><h3 class="h5 mt-1 mb-1">Cannoli siciliani</h3><p class="small text-secondary mb-0">Scorza croccante, 250 g.</p></div></a></div>
+      <div class="col-6 col-md-4 col-lg-3" data-cat="dolci" data-region="Sicilia"><a href="#prodotto" class="card card-product text-decoration-none text-reset"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1654870032519-9db00597cd78?auto=format&fit=crop&w=600&h=450&q=70" alt="Dolci siciliani misti"></div><div class="card-body"><div class="region">Sicilia</div><h3 class="h5 mt-1 mb-1">Dolci siciliani misti</h3><p class="small text-secondary mb-0">Ricotta e pistacchio, 300 g.</p></div></a></div>
+      <div class="col-6 col-md-4 col-lg-3" data-cat="salse" data-region="Sicilia"><a href="#prodotto" class="card card-product text-decoration-none text-reset"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1612548041350-853c0cd6e299?auto=format&fit=crop&w=600&h=450&q=70" alt="Sugo"></div><div class="card-body"><div class="region">Sicilia</div><h3 class="h5 mt-1 mb-1">Sugo al pomodoro</h3><p class="small text-secondary mb-0">Pomodoro e basilico, 350 g.</p></div></a></div>
+      <div class="col-6 col-md-4 col-lg-3" data-cat="pasta" data-region="Campania"><a href="#prodotto" class="card card-product text-decoration-none text-reset"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1612548041350-853c0cd6e299?auto=format&fit=crop&w=600&h=450&q=70" alt="Spaghetti"></div><div class="card-body"><div class="region">Campania</div><h3 class="h5 mt-1 mb-1">Spaghetti di Gragnano</h3><p class="small text-secondary mb-0">IGP, 500 g.</p></div></a></div>
+      <div class="col-6 col-md-4 col-lg-3" data-cat="oli" data-region="Puglia"><a href="#prodotto" class="card card-product text-decoration-none text-reset"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&h=450&q=70" alt="Olio pugliese"></div><div class="card-body"><div class="region">Puglia</div><h3 class="h5 mt-1 mb-1">Olio Coratina</h3><p class="small text-secondary mb-0">Monocultivar, 500 ml.</p></div></a></div>
+    </div>
+    <p id="emptyMsg" class="text-center text-secondary py-5 d-none">Nessun prodotto trovato. Prova a cambiare categoria o regione.</p>
+  </div>
+</section>
+
+<!-- ============ 4. REGIONI ============ -->
+<section class="py-5" id="regioni">
+  <div class="container py-3">
+    <h2 class="section-title mb-2">Un viaggio tra le regioni</h2>
+    <p class="section-lead mb-4">Ogni prodotto nasce in un territorio preciso. Ecco alcuni dei nostri.</p>
+    <div class="row g-3 g-lg-4">
+      <div class="col-md-4"><div class="region-card"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1568689595552-ae5eb971f704?auto=format&fit=crop&w=700&h=500&q=70" alt="Puglia"></div><div class="txt"><h3 class="h4 mb-1">Puglia</h3><p class="small mb-0">Orecchiette e oli monocultivar.</p></div></div></div>
+      <div class="col-md-4"><div class="region-card"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1759955392586-3ab03e4285ef?auto=format&fit=crop&w=700&h=500&q=70" alt="Toscana"></div><div class="txt"><h3 class="h4 mb-1">Toscana</h3><p class="small mb-0">Olio extravergine delle colline.</p></div></div></div>
+      <div class="col-md-4"><div class="region-card"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1673442635965-34f1b36d8944?auto=format&fit=crop&w=700&h=500&q=70" alt="Sicilia"></div><div class="txt"><h3 class="h4 mb-1">Sicilia</h3><p class="small mb-0">Dolci, agrumi e mandorle.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. CHI SIAMO ============ -->
+<section class="py-5" id="storia" style="background:#fff">
+  <div class="container py-3">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-5"><div class="img-box about-img"><img loading="lazy" src="https://images.unsplash.com/photo-1568689595552-ae5eb971f704?auto=format&fit=crop&w=700&h=875&q=70" alt="Cucina italiana"></div></div>
+      <div class="col-lg-7">
+        <h2 class="section-title mb-3">Una famiglia, tanti produttori</h2>
+        <p class="section-lead">Da tre generazioni selezioniamo cibo italiano di qualità. Visitiamo di persona ogni azienda e scegliamo solo chi lavora con ingredienti locali e metodi tradizionali.</p>
+        <p class="section-lead mb-4">Questo catalogo online riprende la versione stampata: stesse schede, stesse informazioni, sempre aggiornate.</p>
+        <a href="#contatti" class="btn btn-primary">Scopri di più</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. QUALITÀ ============ -->
+<section class="quality py-5" id="qualita">
+  <div class="container py-3">
+    <h2 class="section-title mb-4">Perché sceglierci</h2>
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-3"><div class="q-icon mb-3">&#10004;</div><h3 class="h5">Selezione rigorosa</h3><p class="small mb-0 opacity-75">Solo produttori verificati.</p></div>
+      <div class="col-sm-6 col-lg-3"><div class="q-icon mb-3">&#9873;</div><h3 class="h5">Origine chiara</h3><p class="small mb-0 opacity-75">Regione indicata su ogni scheda.</p></div>
+      <div class="col-sm-6 col-lg-3"><div class="q-icon mb-3">&#10047;</div><h3 class="h5">Ingredienti naturali</h3><p class="small mb-0 opacity-75">Senza aggiunte superflue.</p></div>
+      <div class="col-sm-6 col-lg-3"><div class="q-icon mb-3">&#9733;</div><h3 class="h5">Marchi DOP e IGP</h3><p class="small mb-0 opacity-75">Certificazioni in evidenza.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. SCHEDA PRODOTTO ============ -->
+<section class="product-detail py-5" id="prodotto">
+  <div class="container py-3">
+    <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="#catalogo">Catalogo</a></li><li class="breadcrumb-item"><a href="#catalogo">Pasta</a></li><li class="breadcrumb-item active" aria-current="page">Orecchiette artigianali</li></ol></nav>
+    <div class="row g-5">
+      <div class="col-lg-6">
+        <div id="gallery" class="carousel slide rounded overflow-hidden" data-bs-ride="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active"><div class="img-box"><img src="https://images.unsplash.com/photo-1568689595552-ae5eb971f704?auto=format&fit=crop&w=900&h=675&q=70" alt="Orecchiette 1"></div></div>
+            <div class="carousel-item"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1612548041350-853c0cd6e299?auto=format&fit=crop&w=900&h=675&q=70" alt="Orecchiette 2"></div></div>
+            <div class="carousel-item"><div class="img-box"><img loading="lazy" src="https://images.unsplash.com/photo-1673442635965-34f1b36d8944?auto=format&fit=crop&w=900&h=675&q=70" alt="Orecchiette 3"></div></div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#gallery" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Precedente</span></button>
+          <button class="carousel-control-next" type="button" data-bs-target="#gallery" data-bs-slide="next"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Successiva</span></button>
+        </div>
+        <div class="gallery-thumbs d-flex gap-2 mt-3">
+          <button class="active" data-bs-target="#gallery" data-bs-slide-to="0" aria-label="Foto 1"><div class="img-box"><img src="https://images.unsplash.com/photo-1568689595552-ae5eb971f704?auto=format&fit=crop&w=150&h=115&q=70" alt=""></div></button>
+          <button data-bs-target="#gallery" data-bs-slide-to="1" aria-label="Foto 2"><div class="img-box"><img src="https://images.unsplash.com/photo-1612548041350-853c0cd6e299?auto=format&fit=crop&w=150&h=115&q=70" alt=""></div></button>
+          <button data-bs-target="#gallery" data-bs-slide-to="2" aria-label="Foto 3"><div class="img-box"><img src="https://images.unsplash.com/photo-1673442635965-34f1b36d8944?auto=format&fit=crop&w=150&h=115&q=70" alt=""></div></button>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <h2 class="display-6">Orecchiette artigianali</h2>
+        <p class="lead mt-3">Pasta pugliese lavorata a mano e trafilata al bronzo, per tenere bene il sugo.</p>
+        <div class="d-flex align-items-start gap-3 p-3 rounded my-4" style="background:var(--brand-bg)">
+          <div class="rounded-circle flex-shrink-0" style="width:44px;height:44px;background:var(--brand-secondary)" aria-hidden="true"></div>
+          <div><div class="fw-semibold">Regione di origine: Puglia</div><div class="small text-secondary">Prodotto a Bari, nel cuore della Murgia.</div></div>
+        </div>
+        <dl class="row small">
+          <dt class="col-4">Formato</dt><dd class="col-8">500 g</dd>
+          <dt class="col-4">Ingredienti</dt><dd class="col-8">Semola di grano duro, acqua</dd>
+          <dt class="col-4">Conservazione</dt><dd class="col-8">Luogo fresco e asciutto</dd>
+        </dl>
+        <a href="#contatti" class="btn btn-primary btn-lg">Richiedi informazioni</a>
+        <a href="#catalogo" class="btn btn-outline-primary btn-lg ms-2">Torna al catalogo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. CONTATTI + FOOTER ============ -->
+<section class="contact py-5" id="contatti">
+  <div class="container py-3">
+    <div class="row g-5">
+      <div class="col-lg-5">
+        <h2 class="section-title mb-3">Parliamone</h2>
+        <p class="section-lead">Vuoi ricevere il listino o conoscere un prodotto? Scrivici, rispondiamo entro un giorno lavorativo.</p>
+        <p class="mb-1"><strong>Email:</strong> info@example.it</p>
+        <p class="mb-0"><strong>Telefono:</strong> +39 000 000 0000</p>
+      </div>
+      <div class="col-lg-7">
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label" for="n">Nome</label><input id="n" class="form-control"></div>
+          <div class="col-md-6"><label class="form-label" for="e">Email</label><input id="e" type="email" class="form-control"></div>
+          <div class="col-12"><label class="form-label" for="m">Messaggio</label><textarea id="m" rows="4" class="form-control"></textarea></div>
+          <div class="col-12"><button type="button" class="btn btn-primary btn-lg">Invia messaggio</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="py-4">
+  <div class="container d-flex flex-column flex-md-row justify-content-between gap-2 small">
+    <span>&copy; 2026 Sapori d'Italia. Foto: Unsplash (J. Doherty, R. Sorge, L. Jeffrey, S. Ciravegna, A. Vann, P. Casirati).</span>
+    <span><a href="#categorie">Categorie</a> &nbsp;|&nbsp; <a href="#catalogo">Catalogo</a> &nbsp;|&nbsp; <a href="#contatti">Contatti</a></span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function(){
+  var cat='all',items=[].slice.call(document.getElementById('productGrid').children);
+  var region=document.getElementById('regionFilter'),q=document.getElementById('searchBox'),links=document.querySelectorAll('#catNav .nav-link');
+  function apply(){
+    var n=0,t=q.value.toLowerCase().trim();
+    items.forEach(function(el){
+      var ok=(cat==='all'||el.dataset.cat===cat)&&(region.value==='all'||el.dataset.region===region.value)&&(!t||el.textContent.toLowerCase().indexOf(t)>-1);
+      el.classList.toggle('d-none',!ok);if(ok)n++;
+    });
+    document.getElementById('emptyMsg').classList.toggle('d-none',n>0);
+  }
+  function setCat(c){cat=c;[].forEach.call(links,function(l){l.classList.toggle('active',l.dataset.cat===c)});apply();}
+  document.getElementById('catNav').addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;e.preventDefault();setCat(a.dataset.cat);});
+  [].forEach.call(document.querySelectorAll('[data-go]'),function(a){a.addEventListener('click',function(){setCat(a.dataset.go)})});
+  region.addEventListener('change',apply);q.addEventListener('input',apply);
+  document.getElementById('gallery').addEventListener('slid.bs.carousel',function(e){
+    [].forEach.call(document.querySelectorAll('.gallery-thumbs button'),function(b,i){b.classList.toggle('active',i===e.to)});
+  });
+  /* Image fail hole gradient fallback thakbe */
+  [].forEach.call(document.querySelectorAll('img'),function(i){i.addEventListener('error',function(){i.style.display='none'})});
+})();
+</script>
+</body>
+</html>
